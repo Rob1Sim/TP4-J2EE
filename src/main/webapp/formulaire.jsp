@@ -26,7 +26,7 @@
     <button type="submit">Soumettre</button>
 </form>
 <p style="color: red;">
-    ${error != null ?error:''}
+    ${error != null ? error : ''}
 </p>
 </body>
 </html>
