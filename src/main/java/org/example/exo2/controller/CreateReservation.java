@@ -1,62 +1,64 @@
-package org.example.exo2.model;
+package org.example.exo2.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import org.example.exo2.model.AppartType;
+import org.example.exo2.model.Client;
+import org.example.exo2.model.OptionsType;
+import org.example.exo2.model.Reservation;
+
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Objects;
 
-@WebServlet("/CreateReservation")
+@WebServlet(name = "create-reservation", value = "/createReservation")
 public class CreateReservation extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("isConnected", req.getSession().getAttribute("clientSession") != null);
+        req.getRequestDispatcher("reservation.jsp").forward(req, resp);
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String typeAppartement = request.getParameter("typeAppartement");
         String prixStr = request.getParameter("prix");
         String[] optionsArray = request.getParameterValues("options"); // Récupération des options sélectionnées
 
         // Conversion du champ "prix" en double
-        Double prix = null;
+        double prix = 0.0;
         try {
             prix = Double.parseDouble(prixStr);
         } catch (NumberFormatException e) {
             request.setAttribute("error", "Veuillez entrer un prix valide.");
-            request.getRequestDispatcher("/reservation.jsp").forward(request, response);
-            return;
+            request.getRequestDispatcher("reservation.jsp").forward(request, response);
         }
 
         // Vérification des champs requis
-        if (typeAppartement == null || prix == null || optionsArray == null) {
+        if (typeAppartement == null || optionsArray == null) {
             request.setAttribute("error", "Veuillez remplir tous les champs.");
-            request.getRequestDispatcher("/reservation.jsp").forward(request, response);
-            return;
+            request.getRequestDispatcher("reservation.jsp").forward(request, response);
         }
+
 
         // Création de l'objet Reservation et définition des valeurs
         Reservation reservation = new Reservation();
-
-        // Vérification de la sélection et assignation du type d'appartement
-        if (typeAppartement.equals("0")) {
-            reservation.setType(AppartType.PETIT);
-        } else if (typeAppartement.equals("1")) {
-            reservation.setType(AppartType.MOYEN);
-        } else if (typeAppartement.equals("2")) {
-            reservation.setType(AppartType.GRAND);
-        }
-
         // Conversion des options en ArrayList et définition dans la réservation
-        ArrayList<OptionsType> optionsList = new ArrayList<OptionsType>() ;
+        ArrayList<OptionsType> optionsList = new ArrayList<>() ;
         for (String s : optionsArray) {
-            if (s.equals("Proche de la mer")) {
+            if (s.equals("mer")) {
                 optionsList.add(OptionsType.SEA);
             }
-            if (s.equals("pool")) {
+            if (s.equals("piscine")) {
                 optionsList.add(OptionsType.POOL);
             }
-            if (s.equals("Jardin")) {
+            if (s.equals("jardin")) {
                 optionsList.add(OptionsType.GARDEN);
             }
         }
-        switch (typeAppartement) {
+        reservation.setOptions(optionsList);
+
+        switch (Objects.requireNonNull(typeAppartement)) {
             case "0":
                 reservation.setType(AppartType.PETIT);
                 break;
@@ -68,16 +70,13 @@ public class CreateReservation extends HttpServlet {
                 break;
         }
 
-
-        reservation.setOptions(optionsList);
-
         reservation.setPrice(prix);
+        request.setAttribute("reservation", reservation);
 
-        // Enregistrement de la réservation dans la session
-        HttpSession session = request.getSession();
-        session.setAttribute("reservation", reservation);
-
-        // Redirection vers la page de confirmation
-        response.sendRedirect("info_reservation.jsp");
+        Client client = (Client) request.getSession().getAttribute("clientSession");
+        client.setReservation(reservation);
+        request.getSession().setAttribute("clientSession", client);
+        request.setAttribute("clientBean",client);
+        request.getRequestDispatcher("info_reservation.jsp").forward(request, response);
     }
 }

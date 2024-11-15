@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: robis
@@ -17,34 +18,36 @@
 <c:if test="${not empty error}">
     <p style="color:red;">${error}</p>
 </c:if>
-
-<form action="CreateReservation" method="post">
+<c:if test="${!isConnected}">
+    <p style="color:red;">Vous devez être connecté pour réservé</p>
+    <a href="inscription">Inscription</a>
+</c:if>
+<form action="createReservation" method="post">
+        <label>
+            <select name="typeAppartement">
+                <option value="0" label="petit">petit</option>
+                <option value="1" label="moyenne">moyenne</option>
+                <option value="2" label="grand">grand</option>
+            </select>
+        </label>
     <label>
-        <select name="typeAppartement">
-            <option value="0" label="petit">petit</option>
-            <option value="1" label="moyenne">moyenne</option>
-            <option value="2" label="grand">grand</option>
-        </select>
+        Prix:
+        <input type="text" name="prix">
     </label>
-<br>
-    Prix: <label>
-    <input type="text" name="prix">
-</label><br>
-    <label>Options:</label><br>
-    <label>
-        <input type="checkbox" name="options" value="jardin">
-    </label> Jardin<br>
-    <label>
-        <input type="checkbox" name="options" value="piscine">
-    </label> Piscine<br>
-    <label>
-        <input type="checkbox" name="options" value="proche de la mer">
-    </label> Proche de la mer<br>
+        <label>Options:</label><br>
+        <label>
+            <input type="checkbox" name="options" value="jardin">
+        </label> Jardin<br>
+        <label>
+            <input type="checkbox" name="options" value="piscine">
+        </label> Piscine<br>
+        <label>
+            <input type="checkbox" name="options" value="mer">
+        </label> Proche de la mer<br>
+        <c:if test="${isConnected}">
+            <input type="submit" value="Réserver">
+        </c:if>
 
-    <input type="submit" value="Réserver">
-<br>
-
-    <input type="submit" value="Réserver">
 </form>
 </body>
 </html>

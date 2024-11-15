@@ -40,6 +40,8 @@ public class CreateClient extends HttpServlet {
             client.setEmail(email);
             client.setPhone(phone);
 
+            HttpSession session = req.getSession();
+            session.setAttribute("clientSession", client);
             req.setAttribute("clientBean", client);
             req.getRequestDispatcher("info_client.jsp").forward(req, resp);
 

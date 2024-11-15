@@ -10,7 +10,7 @@
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
 <a href="inscription">Inscription</a>
-<a href="">Réservation</a>
+<a href="createReservation">Réservation</a>
 
 </body>
 </html>
