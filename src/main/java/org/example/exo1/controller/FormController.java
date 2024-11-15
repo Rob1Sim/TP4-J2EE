@@ -22,7 +22,6 @@ public class FormController extends HttpServlet {
         String codePostal = request.getParameter("codePostal");
         String[] transports = request.getParameterValues("transports");
 
-        // Validate required fields
         if (nom == null || prenom == null || genre == null || codePostal == null ||
                 nom.isEmpty() || prenom.isEmpty() || genre.isEmpty() || codePostal.isEmpty()) {
             request.setAttribute("error", "All fields are required!");
@@ -31,7 +30,6 @@ public class FormController extends HttpServlet {
             return;
         }
 
-        // Validate names
         if (!isValidName(nom)) {
             request.setAttribute("error", "Nom is invalid! It should only contain letters and spaces.");
             RequestDispatcher rd = request.getRequestDispatcher("formulaire.jsp");
@@ -46,7 +44,6 @@ public class FormController extends HttpServlet {
             return;
         }
 
-        // Validate code postal
         if (!isValidCodePostal(codePostal)) {
             request.setAttribute("error", "CodePostal invalid!");
             RequestDispatcher rd = request.getRequestDispatcher("formulaire.jsp");
@@ -54,7 +51,6 @@ public class FormController extends HttpServlet {
             return;
         }
 
-        // Create a new Formulaire object
         Formulaire formData = new Formulaire();
         formData.setNom(nom);
         formData.setPrenom(prenom);
@@ -62,15 +58,12 @@ public class FormController extends HttpServlet {
         formData.setCodePostal(codePostal);
         formData.setTransports(transports != null ? Arrays.asList(transports) : new ArrayList<>());
 
-        // Get the session and retrieve the list of form submissions
         HttpSession session = request.getSession();
 
-        // Store the updated list back in the session
         session.setAttribute("formData", formData);
 
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
-        // Forward to the results page
         RequestDispatcher rd = request.getRequestDispatcher("resultatFormulaire.jsp");
 
         StringBuilder formattedTransports = new StringBuilder();
@@ -83,7 +76,7 @@ public class FormController extends HttpServlet {
 
 
     private boolean isValidCodePostal(String codePostal) {
-        String postalCodeRegex = "^[0-9]{5}$";  // A simple regex for a 5-digit postal code.
+        String postalCodeRegex = "^[0-9]{5}$";
 
         Pattern pattern = Pattern.compile(postalCodeRegex);
         Matcher matcher = pattern.matcher(codePostal);
