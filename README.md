@@ -42,3 +42,22 @@ On obtiens les vues suivantes.
 
 
 ### Partie 2: Réservation
+
+
+![image2](/images/img_1.png)
+La première image montre le code d'une page JSP utilisée pour gérer les réservations d'appartements. Ce formulaire permet à l'utilisateur de :
+
+Choisir un type d'appartement (Petit, Moyen, Grand) via un menu déroulant (<select>).
+Entrer le prix de l'appartement dans un champ de texte.
+Sélectionner des options supplémentaires (Jardin, Piscine, Proche de la mer) grâce à des cases à cocher (<input type="checkbox">).
+Soumettre le formulaire en appuyant sur le bouton "Réserver".
+Un système de gestion des erreurs est également intégré : si une erreur est détectée, un message en rouge s'affiche pour informer l'utilisateur. Ce système utilise une balise JSTL <c:if> pour vérifier la présence de l'attribut error et afficher le message approprié.
+
+
+![image2](/images/img.png)
+La deuxième image montre une section du servlet CreateReservation. Ce code est responsable de :
+
+Vérifier le type d'appartement sélectionné par l'utilisateur et de l'assigner dans l'objet de réservation en utilisant une série de conditions if-else.
+Traiter les options sélectionnées par l'utilisateur en convertissant chaque valeur reçue en tant que chaîne de caractères en une énumération Option. Les options sont ajoutées dans une liste ArrayList<OptionsType>.
+Une structure switch est également visible pour gérer le type d'appartement, en utilisant les valeurs "0", "1", et "2" pour définir respectivement les types "Petit", "Moyen", et "Grand".
+Ce code montre le traitement des données et la gestion des options sélectionnées, permettant de convertir les valeurs du formulaire en énumérations et d'assurer une validation avant de sauvegarder la réservation.
