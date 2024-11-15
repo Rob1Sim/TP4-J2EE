@@ -2,8 +2,7 @@
 ## Simonneau Robin, Pottier Loann, Landry Simon
 
 ## **Exercice 1**
-Dans cet exercice, il nous est demandé de créer un formulaire, qui doit stocker des informations sur des clients.  
-Tout d'abord, nous avons commencé par créer le beans qui correspond au client et à la réservation, ce bean est placé dans le packet **Model**.
+Dans cette exercice il nous est demandé de créer un formulaire permettant d'enregistré des données et des les afficher, nous avons commencé par créer le Bean correspondant au formualaire.
 ![image1](images/FormulaireBean.png)
 
 *Formulaire.java*
