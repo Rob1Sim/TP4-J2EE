@@ -2,6 +2,8 @@
 ## Simonneau Robin, Pottier Loann, Landry Simon
 
 ## **Exercice 1**
+Dans cette exercice il nous est demandé de créer un formulaire, qui doit stocker des réservations et des clients.  
+Tout d'abord nous avons commencer par créer les beans qui corrrespondents au client et à la réservation, ces beans sont placé dans le packet **Model**.
 
 
 ## **Exercice 2**

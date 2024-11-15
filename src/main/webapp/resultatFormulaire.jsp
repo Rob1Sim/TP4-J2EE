@@ -1,12 +1,10 @@
-<%@ page import="org.example.exo1.beans.Formulaire" %>
-<%@ page import="java.util.List" %>
+<jsp:useBean id="formData" scope="session" type="org.example.exo1.beans.Formulaire"/>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="UTF-8" %>
-<jsp:useBean id="formDataList" scope="session" type="java.util.List<org.example.exo1.beans.Formulaire>" />
+<%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
     <title>Résultats</title>
     <style>
         table {
@@ -26,18 +24,17 @@
         h1 {
             text-align: center;
         }
+        .message {
+            text-align: center;
+            color: green;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 <h1>Informations soumises</h1>
+<p class="message">Vos identifiants ont été bien enregistrés</p>
 
-<%-- Vérification de la liste des formulaires --%>
-<% if (formDataList != null && !formDataList.isEmpty()) { %>
-<%
-    // Iteration sur la liste de formulaires, chaque formulaire dans un tableau séparé
-    for (Formulaire formData : formDataList) {
-%>
-<h2>Identifiant : <%= formData.getNom() %> <%= formData.getPrenom() %></h2>
 <table>
     <tr>
         <th>Nom</th>
@@ -47,28 +44,23 @@
         <th>Transports</th>
     </tr>
     <tr>
-        <td><%= formData.getNom() %></td>
-        <td><%= formData.getPrenom() %></td>
-        <td><%= formData.getGenre() %></td>
-        <td><%= formData.getCodePostal() %></td>
+        <td>${formData.nom}</td>
+        <td>${formData.prenom}</td>
+        <td>${formData.genre}</td>
+        <td>${formData.codePostal}</td>
         <td>
             <%
-                // Affichage des transports
-                List<String> transports = formData.getTransports();
-                for (int i = 0; i < transports.size(); i++) {
-                    out.print(transports.get(i));
-                    if (i < transports.size() - 1) {
-                        out.print(", ");
-                    }
+                // Get the list of transports
+                java.util.List<String> transports = formData.getTransports();
+                Iterator<String> iterator = transports.iterator();
+                while (iterator.hasNext()) {
+                    String transport = iterator.next();
+                    pageContext.getOut().print(transport);
+                    pageContext.getOut().print("<br />");
                 }
             %>
         </td>
     </tr>
 </table>
-<% } %>
-<% } else { %>
-<p>Aucun identifiant soumis.</p>
-<% } %>
-
 </body>
 </html>

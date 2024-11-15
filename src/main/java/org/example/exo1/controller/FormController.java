@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 public class FormController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         String nom = request.getParameter("nom");
         String prenom = request.getParameter("prenom");
         String genre = request.getParameter("genre");
@@ -26,6 +27,21 @@ public class FormController extends HttpServlet {
         if (nom == null || prenom == null || genre == null || codePostal == null ||
                 nom.isEmpty() || prenom.isEmpty() || genre.isEmpty() || codePostal.isEmpty()) {
             request.setAttribute("error", "All fields are required!");
+            RequestDispatcher rd = request.getRequestDispatcher("formulaire.jsp");
+            rd.forward(request, response);
+            return;
+        }
+
+        // Validate names
+        if (!isValidName(nom)) {
+            request.setAttribute("error", "Nom is invalid! It should only contain letters and spaces.");
+            RequestDispatcher rd = request.getRequestDispatcher("formulaire.jsp");
+            rd.forward(request, response);
+            return;
+        }
+
+        if (!isValidName(prenom)) {
+            request.setAttribute("error", "Prénom is invalid! It should only contain letters and spaces.");
             RequestDispatcher rd = request.getRequestDispatcher("formulaire.jsp");
             rd.forward(request, response);
             return;
@@ -49,29 +65,32 @@ public class FormController extends HttpServlet {
 
         // Get the session and retrieve the list of form submissions
         HttpSession session = request.getSession();
-        List<Formulaire> formDataList = (List<Formulaire>) session.getAttribute("formDataList");
-
-        // If the list is null, initialize it
-        if (formDataList == null) {
-            formDataList = new ArrayList<>();
-        }
-
-        // Add the current form data to the list
-        formDataList.add(formData);
 
         // Store the updated list back in the session
-        session.setAttribute("formDataList", formDataList);
+        session.setAttribute("formData", formData);
 
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
         // Forward to the results page
         RequestDispatcher rd = request.getRequestDispatcher("resultatFormulaire.jsp");
         rd.forward(request, response);
     }
+
 
     private boolean isValidCodePostal(String codePostal) {
         String postalCodeRegex = "^[0-9]{5}$";  // A simple regex for a 5-digit postal code.
 
         Pattern pattern = Pattern.compile(postalCodeRegex);
         Matcher matcher = pattern.matcher(codePostal);
+        return matcher.matches();
+    }
+
+    private boolean isValidName(String name) {
+        // The regex allows only alphabetic characters and spaces
+        // This will match names like "Jean", "Jean-Pierre", "Anne Marie"
+        String nameRegex = "^[a-zA-ZàáâäçèéêëîïôùúûüÿñæœÀÁÂÄÇÈÉÊËÎÏÔÙÚÛÜŸÑÆŒ ]+$";
+        Pattern pattern = Pattern.compile(nameRegex);
+        Matcher matcher = pattern.matcher(name);
         return matcher.matches();
     }
 }

@@ -20,7 +20,6 @@
     </select><br/>
     Code Postal: <input type="text" name="codePostal" /><br/>
     Transports :
-    Transports :
     <input type="checkbox" name="transports" value="Voiture" /> Voiture
     <input type="checkbox" name="transports" value="Vélo" /> Vélo
     <input type="checkbox" name="transports" value="Train" /> Train<br/>
