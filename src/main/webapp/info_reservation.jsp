@@ -16,7 +16,7 @@
 <body>
     <p>${clientBean.firstName} ${clientBean.lastName} vous avez réserver un appartement de type : ${reservation.type} à un prix de  ${reservation.price} €.
         Avec ces options :</p>
-    <span> ${reservation.options}</span>
+    <span> ${formattedOptions}</span>
 <p>Un mail de confirmation vous a été envoyé à : ${clientBean.email}.</p>
 </body>
 </html>
