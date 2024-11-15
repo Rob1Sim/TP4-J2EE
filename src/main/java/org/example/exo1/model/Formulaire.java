@@ -1,4 +1,4 @@
-package org.example.exo1.beans;
+package org.example.exo1.model;
 
 
 import java.util.List;

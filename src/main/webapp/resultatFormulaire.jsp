@@ -1,4 +1,4 @@
-<jsp:useBean id="formData" scope="session" type="org.example.exo1.beans.Formulaire"/>
+<jsp:useBean id="formData" scope="session" type="org.example.exo1.model.Formulaire"/>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="UTF-8" %>
 <%@ page import="java.util.*" %>
@@ -49,16 +49,7 @@
         <td>${formData.genre}</td>
         <td>${formData.codePostal}</td>
         <td>
-            <%
-                // Get the list of transports
-                java.util.List<String> transports = formData.getTransports();
-                Iterator<String> iterator = transports.iterator();
-                while (iterator.hasNext()) {
-                    String transport = iterator.next();
-                    pageContext.getOut().print(transport);
-                    pageContext.getOut().print("<br />");
-                }
-            %>
+            ${formattedTransports}
         </td>
     </tr>
 </table>

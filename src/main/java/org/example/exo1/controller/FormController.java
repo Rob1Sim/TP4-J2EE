@@ -3,7 +3,7 @@ package org.example.exo1.controller;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import org.example.exo1.beans.Formulaire;
+import org.example.exo1.model.Formulaire;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -73,6 +73,12 @@ public class FormController extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         // Forward to the results page
         RequestDispatcher rd = request.getRequestDispatcher("resultatFormulaire.jsp");
+
+        StringBuilder formattedTransports = new StringBuilder();
+        for (String transport : formData.getTransports()) {
+            formattedTransports.append(transport).append("<br />");
+        }
+        request.setAttribute("formattedTransports", formattedTransports.toString());
         rd.forward(request, response);
     }
 
@@ -86,8 +92,6 @@ public class FormController extends HttpServlet {
     }
 
     private boolean isValidName(String name) {
-        // The regex allows only alphabetic characters and spaces
-        // This will match names like "Jean", "Jean-Pierre", "Anne Marie"
         String nameRegex = "^[a-zA-ZàáâäçèéêëîïôùúûüÿñæœÀÁÂÄÇÈÉÊËÎÏÔÙÚÛÜŸÑÆŒ ]+$";
         Pattern pattern = Pattern.compile(nameRegex);
         Matcher matcher = pattern.matcher(name);
