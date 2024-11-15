@@ -11,7 +11,6 @@ public class Formulaire {
     private String codePostal;
     private List<String> transports;
 
-    // Getters and Setters
     public String getNom() { return nom; }
     public void setNom(String nom) { this.nom = nom; }
 

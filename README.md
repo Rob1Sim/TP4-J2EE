@@ -2,7 +2,7 @@
 ## Simonneau Robin, Pottier Loann, Landry Simon
 
 ## **Exercice 1**
-Dans cette exercice il nous est demandé de créer un formulaire permettant d'enregistré des données et des les afficher, nous avons commencé par créer le Bean correspondant au formualaire.
+Le but de cet exercice est de créer un formulaire permettant d'enregistrer des informations sur un utilisateur.
 ![image1](images/FormulaireBean.png)
 
 *Formulaire.java*
@@ -22,11 +22,7 @@ Ensuite, nous avons créé la vue pour le resultat :
 *resultatFormulaire.jsp*
 
 
-Les expressions de langages permettent de récupérer les informations que l'on passe dans la requête, comme **isError**, qui si est vrai alors affiche un message d'erreur.  
-Dans _resultatFormulaire.jsp_ on passe directement l'objet **FormData** ce qui nous permet de récupérer les valeurs de ces attributs.
-(ici le .out affiche une erreur dans mon IDE, mais le code fonctionne)
-
-Dans _resultatFormulaire.jsp_ on utilise aussi un **Iterator** pour parcourir la liste des véhicules
+On utilise ici la syntaxe EL pour aller chercher les informations directement depuis la session
 
 Ensuite le code du controller *FormController.jsp* :
 
@@ -38,7 +34,7 @@ Ici les validations des paramètres du formulaire
 
 ![image1](images/FormulaireControllerCreation.png)
 
-Ici on instancie le bean et on le stock dans la session pour que le _resultatFormulaire.jsp_ puisse y accéder
+Ici, on instancie le bean et on le stock dans la session pour que le _resultatFormulaire.jsp_ puisse y accéder.
 
 
 
