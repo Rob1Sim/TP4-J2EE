@@ -24,13 +24,16 @@ public class CreateClient extends HttpServlet {
         String email = req.getParameter("email");
         String phone = req.getParameter("phone");
 
+        //Vérifie si les infos sont valident
         if (firstName == null || firstName.trim().isEmpty()
                 || lastName == null || lastName.trim().isEmpty()
                 || phone == null || phone.trim().isEmpty()
                 || email == null || email.trim().isEmpty() || !isValidEmail(email) || !isValidPhoneNumber(phone)) {
+            //Si non on affiche une erreur
             req.setAttribute("isError", true);
             req.getRequestDispatcher("inscription.jsp").forward(req, resp);
         } else {
+            //Si oui on affiche les donnée du nouveau client
             Client client = new Client();
             client.setFirstName(firstName);
             client.setLastName(lastName);
