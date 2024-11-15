@@ -94,3 +94,28 @@ On obtient les vues suivantes.
 
 
 ### Partie 2: Réservation
+Dans cette partie on créer un fomulaire pour les réservations, afin d'éviter de dupliquer le code de l'inscription nous avons opté d'enregistrer l'utilisateur dans les données de sessions et de bloquer la création d'une réservation si l'utilisateur n'est pas connecté et donc si l'utilisateur n'est pas connecté un message lui dit de le faire pour pouvoir réserver.  
+![image1](images/img_2.png)
+*reservation.jsp*  
+
+![image1](images/img_3.png)
+*CreateReservation.java*  
+Dans la méthode GET, on vérifie si un utilisateur est enregisté en session, si il ne l'est pas on va lui demandé de se connecté.   
+
+Dans le POST, on récupère les données du POST, notamment les données des SELECT et des checkbox, duquel on choisi le Type Correspondant.
+![image1](images/img_4.png)
+*CreateReservation.java*  
+
+Quand on a fini d'attribuer les valeur de la réservation, on mets à jour les données de l'utilisateur avec la nouvelle réservation, et on mets à jour la réservation créer, puis on renvoie vers la page qui montre les informations.  
+![image1](images/img_5.png)
+*CreateReservation.java*  
+
+La page renvoyé est la suivante où l'on affiche les différentes informations du client et de la réservation.  
+![image1](images/img_6.png)
+*info_reservation.jsp*  
+
+On obtient les résultats suivants :  
+![image1](images/img_9.png)  
+![image1](images/img_8.png)  
+![image1](images/img_10.png)
+![image1](images/img_7.png)  

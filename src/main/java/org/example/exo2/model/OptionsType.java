@@ -14,5 +14,8 @@ public enum OptionsType {
         return name;
     }
 
-
+    @Override
+    public String toString() {
+        return name;
+    }
 }
