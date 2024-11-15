@@ -73,10 +73,18 @@ public class CreateReservation extends HttpServlet {
         reservation.setPrice(prix);
         request.setAttribute("reservation", reservation);
 
+        StringBuilder formattedOptions = new StringBuilder();
+        for (OptionsType option : reservation.getOptions()) {
+            formattedOptions.append(option).append("<br />");
+        }
+        request.setAttribute("formattedOptions", formattedOptions.toString());
+
+
         Client client = (Client) request.getSession().getAttribute("clientSession");
         client.setReservation(reservation);
         request.getSession().setAttribute("clientSession", client);
         request.setAttribute("clientBean",client);
+
         request.getRequestDispatcher("info_reservation.jsp").forward(request, response);
     }
 }
